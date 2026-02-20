@@ -6,8 +6,8 @@ Item {
     property double centered_x: 0
     property double centered_y: 0
 
-    width: 40
-    height: 40
+    width: Constants.particle_radius
+    height: Constants.particle_radius
     antialiasing: true
     x: container.centered_x - (width / 2)
     y: container.centered_y + (height / 2)
