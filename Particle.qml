@@ -1,4 +1,5 @@
 import QtQuick
+import Qt_ParticleSystem
 
 Item {
     id: container
@@ -8,6 +9,7 @@ Item {
 
     width: Constants.particle_radius
     height: Constants.particle_radius
+
     antialiasing: true
     x: container.centered_x - (width / 2)
     y: container.centered_y + (height / 2)

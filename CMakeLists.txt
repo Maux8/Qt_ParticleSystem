@@ -11,6 +11,8 @@ qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appQt_ParticleSystem
     main.cpp
+    constants.cpp
+    particle.cpp
 )
 
 qt_add_qml_module(appQt_ParticleSystem
@@ -21,6 +23,7 @@ qt_add_qml_module(appQt_ParticleSystem
         QML_FILES
         QML_FILES Particle.qml
         SOURCES constants.h constants.cpp
+        SOURCES particle.h particle.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

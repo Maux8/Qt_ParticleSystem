@@ -2,7 +2,7 @@
 #define CONSTANTS_H
 
 #include <QObject>
-#include <QtQml>
+#include <QtQmlIntegration>
 
 class Constants : public QObject
 {
@@ -23,7 +23,7 @@ signals:
     void particle_radiusChanged();
 
 private:
-    double m_particle_radius = 30; // radius for all particles
+    double m_particle_radius = 40; // radius for all particles
 };
 
 #endif // CONSTANTS_H

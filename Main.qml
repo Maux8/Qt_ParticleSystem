@@ -1,4 +1,5 @@
 import QtQuick
+import Qt_ParticleSystem
 
 Window {
     width: 640
