@@ -11,18 +11,19 @@ qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appQt_ParticleSystem
     main.cpp
-    constants.cpp
+    Application/constants.cpp
     particle.cpp
 )
+
 
 qt_add_qml_module(appQt_ParticleSystem
     URI Qt_ParticleSystem
     VERSION 1.0
     QML_FILES
-        Main.qml
+        presentation/Main.qml
         QML_FILES
         QML_FILES Particle.qml
-        SOURCES constants.h constants.cpp
+        SOURCES Application/constants.h Application/constants.cpp
         SOURCES particle.h particle.cpp
 )
 
@@ -41,6 +42,10 @@ target_link_libraries(appQt_ParticleSystem
     PRIVATE Qt6::Quick
 )
 target_link_libraries(appQt_ParticleSystem PRIVATE Qt6::Core)
+
+target_include_directories(appQt_ParticleSystem PUBLIC
+     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Application>
+)
 
 include(GNUInstallDirs)
 install(TARGETS appQt_ParticleSystem
