@@ -8,8 +8,9 @@ Window {
     color: "black"
     title: qsTr("Particle System")
 
-    Particle {
-        centered_x: parent.width / 2
-        centered_y: parent.height / 2
+    MouseArea {
+        id: wholeScreen
+        anchors.fill: parent
+        onClicked: { CppInterface.test(); }
     }
 }
