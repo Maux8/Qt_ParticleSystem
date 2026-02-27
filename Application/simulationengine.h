@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtQmlIntegration/qqmlintegration.h>
+#include <QQmlEngine>
 
 class SimulationEngine : public QObject
 {
@@ -12,7 +13,7 @@ class SimulationEngine : public QObject
 public:
     SimulationEngine(QObject* parent = nullptr);
 
-    void spawnParticle(float mouseX, float mouseY);
+    Q_INVOKABLE void spawnParticle(float mouseX, float mouseY);
 };
 
 #endif // SIMULATIONENGINE_H

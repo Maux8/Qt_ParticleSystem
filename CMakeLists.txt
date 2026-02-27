@@ -16,7 +16,6 @@ qt_add_executable(appQt_ParticleSystem
     Application/constants.cpp
     Application/simulationengine.cpp
     Interface/cppinterface.cpp
-    particle.cpp
 )
 
 
@@ -24,11 +23,9 @@ qt_add_qml_module(appQt_ParticleSystem
     URI Qt_ParticleSystem
     VERSION 1.0
     QML_FILES
-        presentation/Main.qml
-        QML_FILES
-        QML_FILES Particle.qml
+        Presentation/Main.qml
+        Presentation/Particle.qml
         SOURCES Application/constants.h Application/constants.cpp
-        SOURCES particle.h particle.cpp
         SOURCES Application/simulationengine.h Application/simulationengine.cpp
         SOURCES Interface/cppinterface.h Interface/cppinterface.cpp
 )
