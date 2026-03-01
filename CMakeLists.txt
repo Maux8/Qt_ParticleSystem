@@ -5,18 +5,29 @@ project(Qt_ParticleSystem VERSION 0.1 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 qt_standard_project_setup(REQUIRES 6.8)
 
 qt_add_executable(appQt_ParticleSystem
     main.cpp
+    Application/constants.cpp
+    Application/simulationengine.cpp
+    Interface/cppinterface.cpp
 )
+
 
 qt_add_qml_module(appQt_ParticleSystem
     URI Qt_ParticleSystem
     VERSION 1.0
     QML_FILES
-        Main.qml
+        Presentation/Main.qml
+        Presentation/Particle.qml
+        SOURCES Application/constants.h Application/constants.cpp
+        SOURCES Application/simulationengine.h Application/simulationengine.cpp
+        SOURCES Interface/cppinterface.h Interface/cppinterface.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -32,6 +43,14 @@ set_target_properties(appQt_ParticleSystem PROPERTIES
 
 target_link_libraries(appQt_ParticleSystem
     PRIVATE Qt6::Quick
+)
+target_link_libraries(appQt_ParticleSystem PRIVATE Qt6::Core)
+target_link_libraries(appQt_ParticleSystem PRIVATE Qt6::Core)
+target_link_libraries(appQt_ParticleSystem PRIVATE Qt6::Core)
+
+target_include_directories(appQt_ParticleSystem PUBLIC
+     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Application>
+     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Interface>
 )
 
 include(GNUInstallDirs)
