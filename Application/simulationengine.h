@@ -13,6 +13,13 @@ class SimulationEngine : public QObject
 public:
     SimulationEngine(QObject* parent = nullptr);
 
+    void start();
+
+    void stop();
+
+private slots:
+    void onTick();
+
     Q_INVOKABLE void spawnParticle(float mouseX, float mouseY);
 };
 
