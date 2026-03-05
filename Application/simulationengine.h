@@ -5,6 +5,7 @@
 #include <QtQmlIntegration/qqmlintegration.h>
 #include <QQmlEngine>
 #include <QTimer>
+#include <QElapsedTimer>
 
 class SimulationEngine : public QObject
 {
@@ -27,13 +28,12 @@ private:
     Q_INVOKABLE void spawnParticle(float mouseX, float mouseY);
 
     QTimer* m_timer;
-    QTime m_clock;
+    QElapsedTimer m_clock;
     bool m_running = false;
-    int m_mssecAtLastTick = 0;
-    int m_simTime = 0;
-    double m_accumulator = 0;
+    float m_simTime = 0;
+    float m_accumulator = 0;
 
-    const double FIXED_DT_MS = 1000 / 60; // 60Hz
+    const double FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms intera
 };
 
 #endif // SIMULATIONENGINE_H

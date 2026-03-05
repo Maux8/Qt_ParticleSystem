@@ -7,6 +7,7 @@
 class Constants : public QObject
 {
     Q_OBJECT
+    QML_ELEMENT
     Q_PROPERTY(double particle_radius READ particle_radius WRITE setParticle_radius NOTIFY particle_radiusChanged FINAL)
 public:
     Constants(QObject *parent = nullptr);

@@ -3,19 +3,21 @@
 #include <QDebug>
 #include <QFile>
 #include <QDir>
+#include <QDebug>
 #include <algorithm>
 
 SimulationEngine::SimulationEngine(QObject* parent)
     : QObject{parent}
 {
     m_timer = new QTimer(this);
+    m_clock = QElapsedTimer();
     connect(m_timer, &QTimer::timeout, this, &SimulationEngine::onTick);
 }
 
 void SimulationEngine::start() {
     m_running = true;
-    m_timer->start(60/1000);
-    m_mssecAtLastTick = m_clock.msecsSinceStartOfDay();
+    m_timer->start(FIXED_DT_MS);
+    m_clock.start();
 }
 
 void SimulationEngine::stop() {
@@ -26,9 +28,9 @@ void SimulationEngine::stop() {
 void SimulationEngine::onTick() {
     if (!m_running) return;
 
-    int currentMs = m_clock.msecsSinceStartOfDay();
-    m_accumulator += currentMs - m_mssecAtLastTick;
-    m_accumulator = std::clamp(m_accumulator, 0.0, 167.0); // at 60hz 167 ms are 10 steps
+    float msSinceLastTick = m_clock.restart();
+    m_accumulator += msSinceLastTick;
+    m_accumulator = std::clamp(m_accumulator, 0.0f, 167.0f); // at 60hz 167 ms are 10 steps
 
     while (m_accumulator >= FIXED_DT_MS) {
         step(FIXED_DT_MS);
@@ -38,7 +40,7 @@ void SimulationEngine::onTick() {
 }
 
 void SimulationEngine::step(double dt) {
-
+    qDebug() << "step taken";
 }
 
 void SimulationEngine::spawnParticle(float mouseX, float mouseY) {
