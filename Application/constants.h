@@ -4,11 +4,12 @@
 #include <QObject>
 #include <QtQmlIntegration>
 
+static const float PARTICLE_RADUS = 40;
+
 class Constants : public QObject
 {
     Q_OBJECT
     QML_ELEMENT
-    QML_SINGLETON
     Q_PROPERTY(double particle_radius READ particle_radius WRITE setParticle_radius NOTIFY particle_radiusChanged FINAL)
 public:
     Constants(QObject *parent = nullptr);
@@ -18,6 +19,7 @@ public:
 
     // set constant values
     void setParticle_radius(double radius_to_set);
+
 
 signals:
     void particle_radiusChanged();
