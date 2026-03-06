@@ -1,11 +1,16 @@
 #ifndef SIMULATIONENGINE_H
 #define SIMULATIONENGINE_H
 
+#include "particlerenderer.h"
+
 #include <QObject>
 #include <QtQmlIntegration/qqmlintegration.h>
 #include <QQmlEngine>
 #include <QTimer>
 #include <QElapsedTimer>
+#include <QList>
+#include <QVector>
+#include <QVector2D>
 
 class SimulationEngine : public QObject
 {
@@ -19,6 +24,8 @@ public:
 
     void stop();
 
+    void setRenderer(ParticleRenderer* renderer);
+
 private slots:
     void onTick();
 
@@ -27,13 +34,18 @@ private:
 
     Q_INVOKABLE void spawnParticle(float mouseX, float mouseY);
 
+    // simulation properties
+    ParticleRenderer* m_renderer = nullptr;
     QTimer* m_timer;
-    QElapsedTimer m_clock;
+    QElapsedTimer* m_clock;
     bool m_running = false;
     float m_simTime = 0;
     float m_accumulator = 0;
 
-    const double FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms intera
+    const double FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms interval
+
+    // particles
+    QList<QVector<QVector2D>> m_particles; // [particle ID] [0 = position, 1 = velocity]
 };
 
 #endif // SIMULATIONENGINE_H

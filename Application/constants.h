@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QtQmlIntegration>
 
+static const float PARTICLE_RADUS = 40;
+
 class Constants : public QObject
 {
     Q_OBJECT
@@ -17,6 +19,7 @@ public:
 
     // set constant values
     void setParticle_radius(double radius_to_set);
+
 
 signals:
     void particle_radiusChanged();
