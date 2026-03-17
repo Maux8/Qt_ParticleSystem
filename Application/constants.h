@@ -3,8 +3,11 @@
 
 #include <QObject>
 #include <QtQmlIntegration>
+#include <qvectornd.h>
 
-static const float PARTICLE_RADUS = 40;
+static const float PARTICLE_RADIUS = 40.0f;
+static const float PARTICLE_MASS = 30.0f;
+static const float GRAVITY_STRENGTH = 0.000001f;
 
 class Constants : public QObject
 {

@@ -16,6 +16,8 @@ qt_add_executable(appQt_ParticleSystem
     main.cpp
     Application/constants.cpp
     Application/simulationengine.cpp
+    Application/physicsmanager.cpp
+    Application/particlerenderer.cpp
     Interface/cppinterface.cpp
 )
 

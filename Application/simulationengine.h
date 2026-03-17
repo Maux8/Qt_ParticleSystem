@@ -2,6 +2,7 @@
 #define SIMULATIONENGINE_H
 
 #include "particlerenderer.h"
+#include "physicsmanager.h"
 
 #include <QObject>
 #include <QtQmlIntegration/qqmlintegration.h>
@@ -28,6 +29,7 @@ public:
 
 private slots:
     void onTick();
+    void onParticleUpdate();
 
 private:
     void step(double dt);
@@ -36,13 +38,14 @@ private:
 
     // simulation properties
     ParticleRenderer* m_renderer = nullptr;
+    PhysicsManager* m_physicsManager;
     QTimer* m_timer;
     QElapsedTimer* m_clock;
     bool m_running = false;
     float m_simTime = 0;
     float m_accumulator = 0;
 
-    const double FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms interval
+    const float FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms interval
 
     // particles
     QList<QVector<QVector2D>> m_particles; // [particle ID] [0 = position, 1 = velocity]
