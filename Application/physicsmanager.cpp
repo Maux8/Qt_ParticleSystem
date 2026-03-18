@@ -13,7 +13,7 @@ void PhysicsManager::update(float dt) {
     // apply forces
     integrateVelocityVerlet(dt);
     // resolve collision
-    // resolve boundaries
+    // ...
 }
 
 void PhysicsManager::integrateVelocityVerlet(float dt) {
@@ -23,18 +23,27 @@ void PhysicsManager::integrateVelocityVerlet(float dt) {
         // calculate new values
         QPair<QVector2D, QVector2D> newValues = velocityVerlet(i, acceleration, dt); // QPair<Pos,Vel>
         // check for out of bounds condition
-        if (newValues.first.x() + AppConstants::ParticleRadius) {
-
+        // right side
+        if (newValues.first.x() + AppConstants::ParticleRadius >= AppConstants::WindowWidth) {
+            newValues.first.setX(AppConstants::WindowWidth - AppConstants::ParticleRadius); // set particle back
+            newValues.second = newValues.second * -1 * AppConstants::Damping; // revert velocity and apply damping
         }
-
-
-
-
+        // left side
+        else if (newValues.first.x() - AppConstants::ParticleRadius <= 0) {
+            newValues.first.setX(AppConstants::ParticleRadius);
+            newValues.second = newValues.second * -1 * AppConstants::Damping;
+        }
+        // top
+        if (newValues.first.y() - AppConstants::ParticleRadius <= 0) {
+            newValues.first.setY(AppConstants::ParticleRadius);
+            newValues.second = newValues.second * -1 * AppConstants::Damping;
+        }
+        // bottom
+        else if (newValues.first.y() + AppConstants::ParticleRadius >= AppConstants::WindowHeight) {
+            newValues.first.setY(AppConstants::WindowHeight - AppConstants::ParticleRadius);
+            newValues.second = newValues.second * -1 * AppConstants::Damping;
+        }
         // set new position / velocity
-
-
-
-
         (*m_particles)[i][0] = newValues.first;
         (*m_particles)[i][1] = newValues.second;
     }
