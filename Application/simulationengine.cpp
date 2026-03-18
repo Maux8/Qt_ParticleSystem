@@ -1,4 +1,5 @@
 #include "simulationengine.h"
+#include "constants.h"
 #include <QQmlComponent>
 #include <QDebug>
 #include <QFile>
@@ -26,7 +27,8 @@ SimulationEngine::SimulationEngine(QObject* parent)
     QVector<QVector2D> newParticle(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
     newParticle[0] = QVector2D(100,100);
     m_particles.push_back(newParticle);
-    m_physicsManager->addForce(QString("gravity"), QVector2D(0, GRAVITY_STRENGTH));
+    auto test = AppConstants::Gravity;
+    m_physicsManager->addForce(QString("gravity"), QVector2D(0, AppConstants::Gravity));
     /// TEST END ///
 }
 
@@ -64,7 +66,7 @@ void SimulationEngine::onTick() {
 }
 
 void SimulationEngine::step(double dt) {
-    m_physicsManager->integrateVelocityVerlet(dt);
+    m_physicsManager->update(dt);
 }
 
 void SimulationEngine::spawnParticle(float mouseX, float mouseY) {

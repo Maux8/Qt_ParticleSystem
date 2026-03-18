@@ -29,7 +29,6 @@ public:
 
 private slots:
     void onTick();
-    void onParticleUpdate();
 
 private:
     void step(double dt);

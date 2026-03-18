@@ -9,15 +9,41 @@ void PhysicsManager::setParticles( QList<QVector<QVector2D>>* particles) {
     m_totalForce = QVector2D(0,0);
 }
 
+void PhysicsManager::update(float dt) {
+    // apply forces
+    integrateVelocityVerlet(dt);
+    // resolve collision
+    // resolve boundaries
+}
+
 void PhysicsManager::integrateVelocityVerlet(float dt) {
-    QVector2D acceleration = m_totalForce / PARTICLE_MASS;
+    QVector2D acceleration = m_totalForce / AppConstants::ParticleMass;
     // for each particle
     for (int i = 0; i < m_particles->count(); i++) {
         // calculate new values
-        QPair<QVector2D, QVector2D> newValues = velocityVerlet(i, acceleration, dt);
+        QPair<QVector2D, QVector2D> newValues = velocityVerlet(i, acceleration, dt); // QPair<Pos,Vel>
+        // check for out of bounds condition
+        if (newValues.first.x() + AppConstants::ParticleRadius) {
+
+        }
+
+
+
+
         // set new position / velocity
+
+
+
+
         (*m_particles)[i][0] = newValues.first;
         (*m_particles)[i][1] = newValues.second;
+    }
+}
+
+void PhysicsManager::resolveBoundaries() {
+    // for each particle
+    for (int i = 0; i < m_particles->count(); i++) {
+
     }
 }
 

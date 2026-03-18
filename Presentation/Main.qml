@@ -3,8 +3,10 @@ import Qt_ParticleSystem
 
 Window {
     id: root
-    width: 640
-    height: 480
+    minimumWidth: Constants.windowWidth
+    maximumWidth: Constants.windowWidth
+    minimumHeight: Constants.windowHeight
+    maximumHeight: Constants.windowHeight
     visible: true
     title: qsTr("Particle System")
 

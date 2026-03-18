@@ -22,6 +22,6 @@ void ParticleRenderer::paint(QPainter* painter) {
     painter->setBrush(Qt::white); // cheaper if all particles have the same color
 
     for (const QVector<QVector2D>& particle : *m_particles) {
-        painter->drawEllipse(particle[0].toPointF(), PARTICLE_RADIUS, PARTICLE_RADIUS);
+        painter->drawEllipse(particle[0].toPointF(), AppConstants::ParticleRadius, AppConstants::ParticleRadius);
     }
 }

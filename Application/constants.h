@@ -5,30 +5,27 @@
 #include <QtQmlIntegration>
 #include <qvectornd.h>
 
-static const float PARTICLE_RADIUS = 40.0f;
-static const float PARTICLE_MASS = 30.0f;
-static const float GRAVITY_STRENGTH = 0.000001f;
+namespace AppConstants
+{
+inline constexpr int WindowWidth = 1280;
+inline constexpr int WindowHeight = 720;
+inline constexpr float Gravity = 0.001f;
+inline constexpr float ParticleMass = 30.0f;
+inline constexpr float ParticleRadius = 20.0f;
+}
 
 class Constants : public QObject
 {
     Q_OBJECT
-    QML_ELEMENT
-    Q_PROPERTY(double particle_radius READ particle_radius WRITE setParticle_radius NOTIFY particle_radiusChanged FINAL)
+    Q_PROPERTY(int windowHeight READ windowHeight CONSTANT)
+    Q_PROPERTY(int windowWidth READ windowWidth CONSTANT)
+
 public:
     Constants(QObject *parent = nullptr);
 
-    // get constant values
-    double particle_radius();
-
-    // set constant values
-    void setParticle_radius(double radius_to_set);
-
-
-signals:
-    void particle_radiusChanged();
-
-private:
-    double m_particle_radius = 40; // radius for all particles
+    // get constant values in QML
+    int windowWidth() const { return AppConstants::WindowWidth; }
+    int windowHeight() const { return AppConstants::WindowHeight; }
 };
 
 #endif // CONSTANTS_H
