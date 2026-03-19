@@ -5,8 +5,6 @@
 #include <QMap>
 #include <QObject>
 
-#include "constants.h"
-
 class PhysicsManager : public QObject
 {
     Q_OBJECT
@@ -19,8 +17,8 @@ public:
 
 private:
     QPair<QVector2D, QVector2D> velocityVerlet(int indexOfParticle, QVector2D acceleration, float dt);
-    void integrateVelocityVerlet(float dt); // integrate over all particles applying m_forces to them
-    void resolveBoundaries();
+    void integrateVelocityVerlet(float dt); // integrate over all particles applying m_forces to them + resolve boundaries
+    void resolveOverlap();
 
     QList<QVector<QVector2D>>* m_particles = nullptr;
     // forces

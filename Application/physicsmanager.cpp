@@ -1,4 +1,5 @@
 #include "physicsmanager.h"
+#include "constants.h"
 
 PhysicsManager::PhysicsManager(QObject* parent)
     : QObject{parent}
@@ -13,7 +14,7 @@ void PhysicsManager::update(float dt) {
     // apply forces
     integrateVelocityVerlet(dt);
     // resolve collision
-    // ...
+    resolveOverlap();
 }
 
 void PhysicsManager::integrateVelocityVerlet(float dt) {
@@ -49,10 +50,20 @@ void PhysicsManager::integrateVelocityVerlet(float dt) {
     }
 }
 
-void PhysicsManager::resolveBoundaries() {
+void PhysicsManager::resolveOverlap() {
     // for each particle
     for (int i = 0; i < m_particles->count(); i++) {
-
+        for (int j = i + 1; j < m_particles->count(); j++) {
+            QVector2D difference = m_particles->at(i)[0] - m_particles->at(j)[0];
+            // overlap
+            if (difference.length() < AppConstants::ParticleRadius * 2) {
+                float overlap = AppConstants::ParticleRadius * 2 - (m_particles->at(j)[0] - m_particles->at(i)[0]).length();
+                QVector2D correction = overlap / (m_particles->at(j)[0] - m_particles->at(i)[0]).length() * (m_particles->at(j)[0] - m_particles->at(i)[0]);
+                (*m_particles)[i][0] -= correction;
+                (*m_particles)[j][0] += correction;
+                // velocity change: ....
+            }
+        }
     }
 }
 

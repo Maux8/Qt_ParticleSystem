@@ -25,8 +25,11 @@ SimulationEngine::SimulationEngine(QObject* parent)
 
     /// TEST ///
     QVector<QVector2D> newParticle(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
-    newParticle[0] = QVector2D(100,100);
+    newParticle[0] = QVector2D(120,50);
     m_particles.push_back(newParticle);
+    QVector<QVector2D> newParticle2(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
+    newParticle2[0] = QVector2D(100,100);
+    m_particles.push_back(newParticle2);
     auto test = AppConstants::Gravity;
     m_physicsManager->addForce(QString("gravity"), QVector2D(0, AppConstants::Gravity));
     /// TEST END ///
