@@ -27,22 +27,22 @@ void PhysicsManager::integrateVelocityVerlet(float dt) {
         // right side
         if (newValues.first.x() + AppConstants::ParticleRadius >= AppConstants::WindowWidth) {
             newValues.first.setX(AppConstants::WindowWidth - AppConstants::ParticleRadius); // set particle back
-            newValues.second = newValues.second * -1 * AppConstants::Damping; // revert velocity and apply damping
+            newValues.second.setX(newValues.second.x() * -1 * AppConstants::Damping); // revert velocity and apply damping
         }
         // left side
         else if (newValues.first.x() - AppConstants::ParticleRadius <= 0) {
             newValues.first.setX(AppConstants::ParticleRadius);
-            newValues.second = newValues.second * -1 * AppConstants::Damping;
+            newValues.second.setX(newValues.second.x() * -1 * AppConstants::Damping);
         }
         // top
         if (newValues.first.y() - AppConstants::ParticleRadius <= 0) {
             newValues.first.setY(AppConstants::ParticleRadius);
-            newValues.second = newValues.second * -1 * AppConstants::Damping;
+            newValues.second.setY(newValues.second.y() * -1 * AppConstants::Damping);
         }
         // bottom
         else if (newValues.first.y() + AppConstants::ParticleRadius >= AppConstants::WindowHeight) {
             newValues.first.setY(AppConstants::WindowHeight - AppConstants::ParticleRadius);
-            newValues.second = newValues.second * -1 * AppConstants::Damping;
+            newValues.second.setY(newValues.second.y() * -1 * AppConstants::Damping);
         }
         // set new position / velocity
         (*m_particles)[i][0] = newValues.first;
@@ -54,14 +54,25 @@ void PhysicsManager::resolveOverlap() {
     // for each particle
     for (int i = 0; i < m_particles->count(); i++) {
         for (int j = i + 1; j < m_particles->count(); j++) {
-            QVector2D difference = m_particles->at(i)[0] - m_particles->at(j)[0];
+            float minDistance = AppConstants::ParticleRadius * 2;
+            QVector2D difference = m_particles->at(j)[0] - m_particles->at(i)[0]; // points from i to j
             // overlap
-            if (difference.length() < AppConstants::ParticleRadius * 2) {
-                float overlap = AppConstants::ParticleRadius * 2 - (m_particles->at(j)[0] - m_particles->at(i)[0]).length();
-                QVector2D correction = overlap / (m_particles->at(j)[0] - m_particles->at(i)[0]).length() * (m_particles->at(j)[0] - m_particles->at(i)[0]);
-                (*m_particles)[i][0] -= correction;
-                (*m_particles)[j][0] += correction;
-                // velocity change: ....
+            if (difference.length() < minDistance) {
+                // calculate collion response
+                QVector2D differenceNorm = difference.normalized();
+                QVector2D relativeVel = m_particles->at(j)[1] - m_particles->at(i)[1];
+                QVector2D impulse = differenceNorm * (QVector2D::dotProduct(relativeVel, differenceNorm)) / (AppConstants::ParticleMass * 2); // *2 because both particles have the same mass
+
+                // apply repulsion force to prevent sticking
+                QVector2D repulsion = differenceNorm * (minDistance - difference.length());
+
+                // update velocities
+                (*m_particles)[i][1] += impulse / AppConstants::ParticleMass;
+                (*m_particles)[j][1] -= impulse / AppConstants::ParticleMass;
+
+                // apply repulsion force
+                (*m_particles)[i][1] -= repulsion / AppConstants::ParticleMass;
+                (*m_particles)[j][1] += repulsion / AppConstants::ParticleMass;
             }
         }
     }
