@@ -68,7 +68,9 @@ void PhysicsManager::resolveOverlap() {
 
                 // update velocities
                 (*m_particles)[i][1] += impulse / AppConstants::ParticleMass;
+                (*m_particles)[i][1] *= AppConstants::Damping;
                 (*m_particles)[j][1] -= impulse / AppConstants::ParticleMass;
+                (*m_particles)[j][1] *= AppConstants::Damping;
 
                 // apply repulsion force
                 (*m_particles)[i][1] -= repulsion / AppConstants::ParticleMass;

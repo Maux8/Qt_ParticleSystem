@@ -24,13 +24,6 @@ SimulationEngine::SimulationEngine(QObject* parent)
     m_physicsManager->setParticles(&m_particles);
 
     /// TEST ///
-    QVector<QVector2D> newParticle(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
-    newParticle[0] = QVector2D(120,50);
-    m_particles.push_back(newParticle);
-    QVector<QVector2D> newParticle2(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
-    newParticle2[0] = QVector2D(100,100);
-    m_particles.push_back(newParticle2);
-    auto test = AppConstants::Gravity;
     m_physicsManager->addForce(QString("gravity"), QVector2D(0, AppConstants::Gravity));
     /// TEST END ///
 }
@@ -44,11 +37,6 @@ void SimulationEngine::start() {
 void SimulationEngine::stop() {
     m_running = false;
     m_timer->stop();
-}
-
-void SimulationEngine::setRenderer(ParticleRenderer* renderer) {
-    m_renderer = renderer;
-    m_renderer->setParticles(&m_particles);
 }
 
 void SimulationEngine::onTick() {
@@ -72,12 +60,13 @@ void SimulationEngine::step(double dt) {
     m_physicsManager->update(dt);
 }
 
-void SimulationEngine::spawnParticle(float mouseX, float mouseY) {
-    QQmlEngine engine;
-    QQmlComponent component(&engine,
-                            QUrl::fromLocalFile("Qt_ParticleSystem/presentation/Particle.qml"));
+void SimulationEngine::setRenderer(ParticleRenderer* renderer) {
+    m_renderer = renderer;
+    m_renderer->setParticles(&m_particles);
+}
 
-    auto *object = component.create();
-    object->setProperty("centered_x", 200);
-    object->setProperty("y", 200);
+void SimulationEngine::spawnParticle(float mouseX, float mouseY) {
+    QVector<QVector2D> newParticle(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
+    newParticle[0] = QVector2D(mouseX, mouseY);
+    m_particles.push_back(newParticle);
 }

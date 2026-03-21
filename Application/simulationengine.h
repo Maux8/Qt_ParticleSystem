@@ -22,18 +22,15 @@ public:
     SimulationEngine(QObject* parent = nullptr);
 
     void start();
-
     void stop();
-
     void setRenderer(ParticleRenderer* renderer);
+    void spawnParticle(float mouseX, float mouseY);
 
 private slots:
     void onTick();
 
 private:
     void step(double dt);
-
-    Q_INVOKABLE void spawnParticle(float mouseX, float mouseY);
 
     // simulation properties
     ParticleRenderer* m_renderer = nullptr;
