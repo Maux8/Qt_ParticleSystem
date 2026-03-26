@@ -12,7 +12,6 @@ class ParticleRenderer : public QQuickPaintedItem
     Q_OBJECT
 public:
     ParticleRenderer(QQuickItem* parent = nullptr);
-
     void setParticles(const QList<QVector<QVector2D>>* particles);
     void paint(QPainter* painter) override;
 

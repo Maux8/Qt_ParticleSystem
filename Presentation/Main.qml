@@ -3,8 +3,11 @@ import Qt_ParticleSystem
 
 Window {
     id: root
-    width: 640
-    height: 480
+    minimumWidth: Constants.windowWidth
+    maximumWidth: Constants.windowWidth
+    minimumHeight: Constants.windowHeight
+    maximumHeight: Constants.windowHeight
+    property int particleCount: 0;
     visible: true
     title: qsTr("Particle System")
 
@@ -13,10 +16,31 @@ Window {
         anchors.fill: parent
         color: "black"
 
+        Text {
+            id: particleText
+            text: "Particles: " + root.particleCount
+            anchors.top: parent.top
+            anchors.left: parent.left
+            color: "white"
+        }
+
         ParticleRenderer {
             id: renderer
             objectName: "renderer"
             anchors.fill: parent
         }
+
+        MouseArea {
+            anchors.fill: parent
+            onPressed: {
+                cppInterface.screenClicked(mouseX, mouseY)
+                root.particleCount += 30;
+            }
+        }
+    }
+
+    CppInterface {
+        id: cppInterface
+        objectName: "cppInterface"
     }
 }
