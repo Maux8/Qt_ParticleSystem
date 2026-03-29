@@ -65,6 +65,7 @@ void PhysicsManager::resolveOverlap() {
 
                 // apply repulsion force to prevent sticking
                 QVector2D repulsion = differenceNorm * (minDistance - difference.length());
+                repulsion *= impulse / repulsion;
 
                 // update velocities
                 (*m_particles)[i].velocity += impulse / AppConstants::ParticleMass;

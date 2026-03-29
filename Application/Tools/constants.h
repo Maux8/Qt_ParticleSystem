@@ -9,10 +9,10 @@ namespace AppConstants
 {
 inline constexpr int WindowWidth = 1280;
 inline constexpr int WindowHeight = 720;
-inline constexpr float Gravity = 0.01f;
-inline constexpr float Damping = 0.9f;
+inline constexpr float Gravity = 0.04f;
+inline constexpr float Damping = 0.80f;
 inline constexpr float ParticleMass = 30.0f;
-inline constexpr float ParticleRadius = 3.0f;
+inline constexpr float ParticleRadius = 10.0f;
 }
 
 class Constants : public QObject

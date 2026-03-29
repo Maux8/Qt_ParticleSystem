@@ -66,7 +66,6 @@ void SimulationEngine::setRenderer(ParticleRenderer* renderer) {
 }
 
 void SimulationEngine::spawnParticle(float mouseX, float mouseY) {
-
     Particle newParticle;
     newParticle.position = QVector2D(mouseX, mouseY);
     newParticle.velocity = QVector2D(0,0);

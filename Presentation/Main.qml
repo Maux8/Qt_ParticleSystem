@@ -33,8 +33,10 @@ Window {
         MouseArea {
             anchors.fill: parent
             onPressed: {
-                cppInterface.screenClicked(mouseX, mouseY)
-                root.particleCount += 30;
+                if (root.particleCount <= 420) {
+                    cppInterface.screenClicked(mouseX, mouseY)
+                    root.particleCount += 30;
+                }
             }
         }
     }

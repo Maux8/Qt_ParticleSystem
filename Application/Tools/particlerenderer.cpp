@@ -3,6 +3,7 @@
 #include <QPainter>
 #include <QBrush>
 #include <QPen>
+#include <algorithm>
 
 ParticleRenderer::ParticleRenderer(QQuickItem* parent)
     : QQuickPaintedItem{parent}
@@ -22,7 +23,13 @@ void ParticleRenderer::paint(QPainter* painter) {
     painter->setPen(Qt::NoPen); // cheaper
     painter->setBrush(Qt::white); // cheaper if all particles have the same color
 
+    float maxSpeed = 1.0f;
+
     for (const Particle& particle : *m_particles) {
+        float speed = particle.velocity.length();
+        speed = std::clamp(speed / maxSpeed, 0.0f, 1.0f);
+        int offSet = (1 - speed) * 255;
+        painter->setBrush(QColor(255, offSet, offSet));
         painter->drawEllipse(particle.position.toPointF(), AppConstants::ParticleRadius, AppConstants::ParticleRadius);
     }
 }
