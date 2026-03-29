@@ -1,5 +1,5 @@
 #include "simulationengine.h"
-#include "constants.h"
+#include "Tools/constants.h"
 #include <QQmlComponent>
 #include <QDebug>
 #include <QFile>
@@ -18,7 +18,7 @@ SimulationEngine::SimulationEngine(QObject* parent)
     // construct properties
     m_physicsManager = new PhysicsManager();
     m_renderer = new ParticleRenderer();
-    m_particles = QList<QVector<QVector2D>>();
+    m_particles = QList<Particle>();
 
     // set particles in physicsmanager (renderer particles are set from main.cpp)
     m_physicsManager->setParticles(&m_particles);
@@ -66,7 +66,9 @@ void SimulationEngine::setRenderer(ParticleRenderer* renderer) {
 }
 
 void SimulationEngine::spawnParticle(float mouseX, float mouseY) {
-    QVector<QVector2D> newParticle(2, QVector2D(0,0)); // index 0 = postion, 1 = velocity
-    newParticle[0] = QVector2D(mouseX, mouseY);
+
+    Particle newParticle;
+    newParticle.position = QVector2D(mouseX, mouseY);
+    newParticle.velocity = QVector2D(0,0);
     m_particles.push_back(newParticle);
 }

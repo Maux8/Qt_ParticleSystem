@@ -2,9 +2,9 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <simulationengine.h>
-#include <particlerenderer.h>
+#include "Tools/particlerenderer.h"
 #include "cppinterface.h"
-#include "constants.h"
+#include "Tools/constants.h"
 
 int main(int argc, char *argv[])
 {

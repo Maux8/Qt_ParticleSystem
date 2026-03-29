@@ -1,7 +1,7 @@
 #ifndef PARTICLERENDERER_H
 #define PARTICLERENDERER_H
 
-#include <constants.h>
+#include "Models/Particle.h"
 
 #include <QObject>
 #include <QQuickItem>
@@ -12,11 +12,11 @@ class ParticleRenderer : public QQuickPaintedItem
     Q_OBJECT
 public:
     ParticleRenderer(QQuickItem* parent = nullptr);
-    void setParticles(const QList<QVector<QVector2D>>* particles);
+    void setParticles(const QList<Particle>* particles);
     void paint(QPainter* painter) override;
 
 private:
-    const QList<QVector<QVector2D>>* m_particles = nullptr;
+    const QList<Particle>* m_particles = nullptr;
 };
 
 #endif // PARTICLERENDERER_H

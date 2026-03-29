@@ -1,8 +1,9 @@
 #ifndef SIMULATIONENGINE_H
 #define SIMULATIONENGINE_H
 
-#include "particlerenderer.h"
+#include "Tools/particlerenderer.h"
 #include "physicsmanager.h"
+#include "Models/Particle.h"
 
 #include <QObject>
 #include <QtQmlIntegration/qqmlintegration.h>
@@ -44,7 +45,7 @@ private:
     const float FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms interval
 
     // particles
-    QList<QVector<QVector2D>> m_particles; // [particle ID] [0 = position, 1 = velocity]
+    QList<Particle> m_particles;
 };
 
 #endif // SIMULATIONENGINE_H
