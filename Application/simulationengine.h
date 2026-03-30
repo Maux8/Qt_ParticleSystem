@@ -2,6 +2,7 @@
 #define SIMULATIONENGINE_H
 
 #include "Tools/particlerenderer.h"
+#include "Tools/appparameter.h"
 #include "physicsmanager.h"
 #include "Models/Particle.h"
 
@@ -20,11 +21,12 @@ class SimulationEngine : public QObject
     QML_ELEMENT
     QML_SINGLETON
 public:
-    SimulationEngine(QObject* parent = nullptr);
+    SimulationEngine(QObject* parent = nullptr, AppParameter* appParameter = nullptr);
 
     void start();
     void stop();
     void setRenderer(ParticleRenderer* renderer);
+    void setAppParemeter(AppParameter* appParameter);
     void spawnParticle(float mouseX, float mouseY);
 
 private slots:
@@ -33,14 +35,15 @@ private slots:
 private:
     void step(double dt);
 
-    // simulation properties
-    ParticleRenderer* m_renderer = nullptr;
-    PhysicsManager* m_physicsManager;
-    QTimer* m_timer;
-    QElapsedTimer* m_clock;
-    bool m_running = false;
-    float m_simTime = 0;
-    float m_accumulator = 0;
+    // simulation propertiers
+    AppParameter*       m_appParameter = nullptr;
+    ParticleRenderer*   m_renderer = nullptr;
+    PhysicsManager*     m_physicsManager;
+    QTimer*             m_timer;
+    QElapsedTimer*      m_clock;
+    bool                m_running = false;
+    float               m_simTime = 0.0f;
+    float               m_accumulator = 0.0f;
 
     const float FIXED_DT_MS = 1000 / 60; // 60Hz ~ 16,6 ms interval
 

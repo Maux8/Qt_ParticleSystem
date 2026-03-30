@@ -3,10 +3,10 @@ import Qt_ParticleSystem
 
 Window {
     id: root
-    minimumWidth: Constants.windowWidth
-    maximumWidth: Constants.windowWidth
-    minimumHeight: Constants.windowHeight
-    maximumHeight: Constants.windowHeight
+    minimumWidth: AppParameter.windowWidth
+    maximumWidth: AppParameter.windowWidth
+    minimumHeight: AppParameter.windowHeight
+    maximumHeight: AppParameter.windowHeight
     property int particleCount: 0;
     visible: true
     title: qsTr("Particle System")
@@ -35,7 +35,8 @@ Window {
             onPressed: {
                 if (root.particleCount <= 420) {
                     cppInterface.screenClicked(mouseX, mouseY)
-                    root.particleCount += 30;
+                    root.particleCount += 30
+                    AppParameter.particleRadius -= 1
                 }
             }
         }

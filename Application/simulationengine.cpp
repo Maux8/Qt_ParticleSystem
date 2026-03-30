@@ -1,5 +1,4 @@
 #include "simulationengine.h"
-#include "Tools/constants.h"
 #include <QQmlComponent>
 #include <QDebug>
 #include <QFile>
@@ -7,8 +6,8 @@
 #include <QDebug>
 #include <algorithm>
 
-SimulationEngine::SimulationEngine(QObject* parent)
-    : QObject{parent}
+SimulationEngine::SimulationEngine(QObject* parent, AppParameter* appParameter)
+    : QObject{parent}, m_appParameter(appParameter)
 {
     // loop
     m_timer = new QTimer(this);
@@ -17,14 +16,14 @@ SimulationEngine::SimulationEngine(QObject* parent)
 
     // construct properties
     m_physicsManager = new PhysicsManager();
-    m_renderer = new ParticleRenderer();
     m_particles = QList<Particle>();
 
     // set particles in physicsmanager (renderer particles are set from main.cpp)
     m_physicsManager->setParticles(&m_particles);
+    m_physicsManager->setAppParameter(m_appParameter);
 
     /// TEST ///
-    m_physicsManager->addForce(QString("gravity"), QVector2D(0, AppConstants::Gravity));
+    m_physicsManager->addForce(QString("gravity"), QVector2D(0, m_appParameter->gravity()));
     /// TEST END ///
 }
 
@@ -63,6 +62,11 @@ void SimulationEngine::step(double dt) {
 void SimulationEngine::setRenderer(ParticleRenderer* renderer) {
     m_renderer = renderer;
     m_renderer->setParticles(&m_particles);
+    m_renderer->setAppParameter(m_appParameter);
+}
+
+void SimulationEngine::setAppParemeter(AppParameter* appParameter) {
+    m_appParameter = appParameter;
 }
 
 void SimulationEngine::spawnParticle(float mouseX, float mouseY) {

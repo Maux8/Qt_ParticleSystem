@@ -1,5 +1,4 @@
 #include "particlerenderer.h"
-#include "Tools/constants.h"
 #include <QPainter>
 #include <QBrush>
 #include <QPen>
@@ -16,6 +15,10 @@ void ParticleRenderer::setParticles(const QList<Particle>* particles) {
     update(); // repaint
 }
 
+void ParticleRenderer::setAppParameter(const AppParameter* appParameter) {
+    m_appParameter = appParameter;
+}
+
 void ParticleRenderer::paint(QPainter* painter) {
     if (!m_particles) return;
 
@@ -30,6 +33,6 @@ void ParticleRenderer::paint(QPainter* painter) {
         speed = std::clamp(speed / maxSpeed, 0.0f, 1.0f);
         int offSet = (1 - speed) * 255;
         painter->setBrush(QColor(255, offSet, offSet));
-        painter->drawEllipse(particle.position.toPointF(), AppConstants::ParticleRadius, AppConstants::ParticleRadius);
+        painter->drawEllipse(particle.position.toPointF(), m_appParameter->particleRadius(), m_appParameter->particleRadius());
     }
 }

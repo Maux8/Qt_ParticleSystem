@@ -4,13 +4,15 @@
 #include <simulationengine.h>
 #include "Tools/particlerenderer.h"
 #include "cppinterface.h"
-#include "Tools/constants.h"
+#include "Tools/appparameter.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    AppParameter appParameter;
     qmlRegisterType<ParticleRenderer>("Qt_ParticleSystem", 1, 0, "ParticleRenderer");
     qmlRegisterType<CppInterface>("Qt_ParticleSystem", 1, 0, "CppInterface");
+    qmlRegisterSingletonInstance<AppParameter>("Qt_ParticleSystem", 1, 0, "AppParameter", &appParameter);
     QQmlApplicationEngine engine;
     QObject::connect(
         &engine,
@@ -18,8 +20,6 @@ int main(int argc, char *argv[])
         &app,
         []() { QCoreApplication::exit(-1); },
         Qt::QueuedConnection);
-    Constants constants;
-    engine.rootContext()->setContextProperty("Constants", &constants);
     engine.loadFromModule("Qt_ParticleSystem", "Main");
     // get renderer
     QObject* root = engine.rootObjects().first();
@@ -27,9 +27,9 @@ int main(int argc, char *argv[])
     // get interface
     CppInterface* interface = root->findChild<CppInterface*>("cppInterface");
     // start simulation
-    SimulationEngine simEngine;
+    SimulationEngine simEngine(nullptr, &appParameter);
     interface->setSimEngine(&simEngine);
-    simEngine.setRenderer(renderer);
+    simEngine.setRenderer(renderer); // must be set befor parameters
     simEngine.start();
 
     return app.exec();

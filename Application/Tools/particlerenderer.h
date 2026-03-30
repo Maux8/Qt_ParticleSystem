@@ -2,6 +2,7 @@
 #define PARTICLERENDERER_H
 
 #include "Models/Particle.h"
+#include "Tools/appparameter.h"
 
 #include <QObject>
 #include <QQuickItem>
@@ -13,10 +14,12 @@ class ParticleRenderer : public QQuickPaintedItem
 public:
     ParticleRenderer(QQuickItem* parent = nullptr);
     void setParticles(const QList<Particle>* particles);
+    void setAppParameter(const AppParameter* appParameter);
     void paint(QPainter* painter) override;
 
 private:
     const QList<Particle>* m_particles = nullptr;
+    const AppParameter* m_appParameter = nullptr;
 };
 
 #endif // PARTICLERENDERER_H
