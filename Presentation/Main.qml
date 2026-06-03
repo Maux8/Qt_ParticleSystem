@@ -36,7 +36,6 @@ Window {
                 if (root.particleCount <= 420) {
                     cppInterface.screenClicked(mouseX, mouseY)
                     root.particleCount += 30
-                    AppParameter.particleRadius -= 1
                 }
             }
         }

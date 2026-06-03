@@ -42,7 +42,7 @@ private:
 
     float m_gravity = 0.04f;
     float m_damping = 0.90f;
-    float m_particleRadius = 20.0f;
+    float m_particleRadius = 15.0f;
     float m_particleMass = 30.0f;
 
 };
